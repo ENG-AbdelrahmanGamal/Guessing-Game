@@ -36,35 +36,31 @@ private var _binding:FragmentGameBinding?=null
             binding.lives.text= "You have new value is $new_value"
          //   Log.i(TAG, "onCreateView: ${binding.lives.text?=new_value}")
         })
-viewmodel.secret_word_Display.observe(viewLifecycleOwner, Observer {new_value->
+       viewmodel.secret_word_Display.observe(viewLifecycleOwner, Observer {new_value->
     binding.word.text=new_value
 })
-        viewmodel.in_correct_Guesses.observe(viewLifecycleOwner, Observer { new_value->binding.incorrectGuesses.text=new_value })
+        viewmodel.in_correct_Guesses.observe(viewLifecycleOwner, Observer { new_value->
+            binding.incorrectGuesses.text=new_value })
 
-
+        viewmodel.gameOver.observe(viewLifecycleOwner, Observer { new_value->
+            if(new_value)
+            {
+                view.findNavController().navigate(R.id.action_gameFragment_to_resultFragment)
+            }
+        })
         binding.guessesButton.setOnClickListener {
        viewmodel.makeGuess(binding.guesses.text.toString().uppercase())
        binding.guesses.text=null
-       if (viewmodel.isLost()||viewmodel.isWin())
-       {
-              //     val result= view.findNavController().navigate(isWinOrLost())
-           view.findNavController().navigate(R.id.action_gameFragment_to_resultFragment)
-
-     }
-
-
+//       if (viewmodel.isLost()||viewmodel.isWin())
+//       {
+//              //     val result= view.findNavController().navigate(isWinOrLost())
+//           view.findNavController().navigate(R.id.action_gameFragment_to_resultFragment)
+//
+//     }
         }
 
         return view
     }
-
-
-
-
-
-
-
-
 
     override fun onDestroy() {
         super.onDestroy()

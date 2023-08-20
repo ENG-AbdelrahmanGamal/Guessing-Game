@@ -18,6 +18,9 @@ class ViewModelGameFragment : ViewModel() {
     val in_correct_Guesses:LiveData<String> get() = _in_correct_Guesses
   private  val  _livesleft =MutableLiveData<Int>(8)
     val livesleft:LiveData<Int>get() = _livesleft
+    private val _game_over=MutableLiveData<Boolean>(false)
+    val gameOver :LiveData<Boolean>get() = _game_over
+
 init {
     _secret_word_Display.value=driveSecritWordDisplayed()
     Log.i(TAG, "created: ")
@@ -43,9 +46,11 @@ init {
                 _livesleft.value=livesleft.value?.minus(1)
             }
         }
+        if(isWin() ||  isLost() )  _game_over.value=true
+
     }
-    fun isWin() =secret_word.equals(secret_word_Display.value,true)
-    fun isLost()=livesleft.value?:0 <= 0
+  private  fun isWin() =secret_word.equals(secret_word_Display.value,true)
+ private   fun isLost()=livesleft.value?:0 <= 0
 
     fun isWinOrLost():String{
         var message=""
