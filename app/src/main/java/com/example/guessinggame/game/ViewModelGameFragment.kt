@@ -2,19 +2,21 @@ package com.example.guessinggame.game
 
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ViewModelGameFragment : ViewModel() {
     private  val TAG = "ViewModelGameFragment"
     val words= listOf<String>("Activity", "Kotlin","Fragment","Android")
     val secret_word = words.random().uppercase()
-    var secret_word_Display=""
-    var correct_Guesses=""
-    var in_correct_Guesses=""
-    var livesleft=8
-init {
-    secret_word_Display=driveSecritWordDisplayed()
+    var correct_Guesses=("")
 
+    val  secret_word_Display=MutableLiveData<String>()
+    val in_correct_Guesses=MutableLiveData<String>("")
+    val  livesleft =MutableLiveData<Int>(8)
+init {
+    secret_word_Display.value=driveSecritWordDisplayed()
+    Log.i(TAG, "created: ")
 }
     private fun driveSecritWordDisplayed(): String {
         var display=""
@@ -27,17 +29,19 @@ init {
         false->"_"
     }
     fun makeGuess(guess:String) {
-        if (guess.length==1){
-            correct_Guesses+=guess
-            secret_word_Display=driveSecritWordDisplayed()
+        if (guess.length==1) {
+            if (secret_word.contains(guess)) {
+                correct_Guesses += guess
+                secret_word_Display.value = driveSecritWordDisplayed()
 
-        }else{
-            in_correct_Guesses+=guess
-            livesleft--
+            } else {
+                in_correct_Guesses.value += guess
+                livesleft.value=livesleft.value?.minus(1)
+            }
         }
     }
-    fun isWin() =secret_word.equals(secret_word_Display,true)
-    fun isLost()=livesleft<=0
+    fun isWin() =secret_word.equals(secret_word_Display.value,true)
+    fun isLost()=livesleft.value?:0 <= 0
 
     fun isWinOrLost():String{
         var message=""
@@ -46,5 +50,13 @@ init {
         else if(isLost())message="You are lost!"
         message +="the correct word was $secret_word "
         return message
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.i(TAG, "onCleared:  cleared")
+    }
+    fun jointogether() {
+        Log.i(TAG, "jointogether:  jointogether")
     }
 }

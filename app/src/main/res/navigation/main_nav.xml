@@ -24,6 +24,7 @@
         tools:layout="@layout/fragment_result" >
 <argument android:name="result"
     app:argType="string"
+    app:nullable="false"
 />
         <action
             android:id="@+id/action_resultFragment_to_gameFragment"

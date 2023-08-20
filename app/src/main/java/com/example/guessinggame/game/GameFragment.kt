@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -28,16 +29,22 @@ private var _binding:FragmentGameBinding?=null
     ): View? {
         _binding= FragmentGameBinding.inflate(inflater,container,false)
         val view =binding.root
+
         viewmodel=ViewModelProvider(this).get(ViewModelGameFragment::class.java)
 
+        viewmodel.livesleft.observe(viewLifecycleOwner,Observer{new_value ->
+            binding.lives.text= "You have new value is $new_value"
+         //   Log.i(TAG, "onCreateView: ${binding.lives.text?=new_value}")
+        })
+viewmodel.secret_word_Display.observe(viewLifecycleOwner, Observer {new_value->
+    binding.word.text=new_value
+})
+        viewmodel.in_correct_Guesses.observe(viewLifecycleOwner, Observer { new_value->binding.incorrectGuesses.text=new_value })
 
 
-
-        updateSecret()
         binding.guessesButton.setOnClickListener {
        viewmodel.makeGuess(binding.guesses.text.toString().uppercase())
        binding.guesses.text=null
-       updateSecret()
        if (viewmodel.isLost()||viewmodel.isWin())
        {
               //     val result= view.findNavController().navigate(isWinOrLost())
@@ -51,10 +58,7 @@ private var _binding:FragmentGameBinding?=null
         return view
     }
 
-    private fun updateSecret() {
-        binding.word.text=viewmodel.secret_word_Display
-        binding.lives.text="you have ${viewmodel.livesleft}lives lift "
-    }
+
 
 
 
