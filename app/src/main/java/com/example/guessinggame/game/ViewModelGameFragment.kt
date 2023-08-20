@@ -2,20 +2,24 @@ package com.example.guessinggame.game
 
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ViewModelGameFragment : ViewModel() {
     private  val TAG = "ViewModelGameFragment"
-    val words= listOf<String>("Activity", "Kotlin","Fragment","Android")
-    val secret_word = words.random().uppercase()
-    var correct_Guesses=("")
+   private val words= listOf<String>("Activity", "Kotlin","Fragment","Android")
+ private   val secret_word = words.random().uppercase()
+  private    var correct_Guesses=("")
 
-    val  secret_word_Display=MutableLiveData<String>()
-    val in_correct_Guesses=MutableLiveData<String>("")
-    val  livesleft =MutableLiveData<Int>(8)
+   private val  _secret_word_Display=MutableLiveData<String>()
+    val secret_word_Display:LiveData<String> get()=_secret_word_Display
+  private  val _in_correct_Guesses=MutableLiveData<String>("")
+    val in_correct_Guesses:LiveData<String> get() = _in_correct_Guesses
+  private  val  _livesleft =MutableLiveData<Int>(8)
+    val livesleft:LiveData<Int>get() = _livesleft
 init {
-    secret_word_Display.value=driveSecritWordDisplayed()
+    _secret_word_Display.value=driveSecritWordDisplayed()
     Log.i(TAG, "created: ")
 }
     private fun driveSecritWordDisplayed(): String {
@@ -32,11 +36,11 @@ init {
         if (guess.length==1) {
             if (secret_word.contains(guess)) {
                 correct_Guesses += guess
-                secret_word_Display.value = driveSecritWordDisplayed()
+                _secret_word_Display.value = driveSecritWordDisplayed()
 
             } else {
-                in_correct_Guesses.value += guess
-                livesleft.value=livesleft.value?.minus(1)
+                _in_correct_Guesses.value += guess
+                _livesleft.value=livesleft.value?.minus(1)
             }
         }
     }
