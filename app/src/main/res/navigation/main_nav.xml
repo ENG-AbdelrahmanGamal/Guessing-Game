@@ -22,10 +22,12 @@
         android:name="com.example.guessinggame.result.ResultFragment"
         android:label="fragment_result"
         tools:layout="@layout/fragment_result" >
-<argument android:name="result"
+<argument
+    android:name="result"
     app:argType="string"
     app:nullable="false"
-/>
+    android:defaultValue="@null"
+    />
         <action
             android:id="@+id/action_resultFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
