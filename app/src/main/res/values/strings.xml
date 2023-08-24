@@ -3,4 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="abdelrahman_gamal">Abdelrahman Gamal</string>
+    <string name="in_correct_guess" >Incorrect Guessws :$s</string>
+    <string name="Lives_left" >You have %d  lives left </string>
+    <string name="guess_a_letter">guess a letter</string>
+
 </resources>

@@ -31,7 +31,7 @@ private var _binding:FragmentGameBinding?=null
         val view =binding.root
 
         viewmodel=ViewModelProvider(this).get(ViewModelGameFragment::class.java)
-
+        binding.viewmodel=viewmodel
         viewmodel.livesleft.observe(viewLifecycleOwner,Observer{new_value ->
             binding.lives.text= "You have new value is $new_value"
          //   Log.i(TAG, "onCreateView: ${binding.lives.text?=new_value}")

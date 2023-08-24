@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".game.GameFragment"
+    >
     <data>
         <variable
             name="viewmodel"
             type="com.example.guessinggame.game.ViewModelGameFragment" />
     </data>
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
-        tools:context=".game.GameFragment">
+       >
 
         <TextView
             android:id="@+id/word"
@@ -21,12 +24,14 @@
             android:layout_gravity="center"
             android:letterSpacing=".1"
             android:textSize="36dp"
+            android:text="@{viewmodel.secret_word_Display}"
             />
         <TextView
             android:id="@+id/lives"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:text="@{@string/Lives_left(viewmodel.livesleft)}"
             android:textSize="16dp"
             />
         <TextView
@@ -34,14 +39,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="16dp"
+            android:textSize="16sp"
+            android:text="@{@string/in_correct_guess(viewmodel.in_correct_Guesses)}"
             />
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/guesses"
-            android:textSize="16dp"
-            android:hint="guess a letter "
+            android:textSize="16sp"
+            android:hint="@string/guess_a_letter"
             />
         <Button
             android:layout_width="wrap_content"
